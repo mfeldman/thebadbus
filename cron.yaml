@@ -1,0 +1,8 @@
+cron:
+- description: Save all bus locations
+  url: /saveCurrentMuniLocations
+  schedule: every 15 minutes
+  
+- description: Build Muni Routes
+  url: /buildMuniRoute/
+  schedule: every monday 00:01

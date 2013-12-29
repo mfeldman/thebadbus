@@ -1,0 +1,37 @@
+application: thebadbus
+version: 10
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /assets
+  static_dir: assets
+
+- url: /
+  script: main.app
+ 
+- url: /route/(.*)
+  script: main.app
+ 
+- url: /vehicleId/(.*)
+  script: main.app
+  
+- url: /saveCurrentMuniLocations
+  script: main.app
+  login: admin
+
+- url: /deleteMuniRoute/(.*)
+  script: main.app
+  login: admin
+  
+- url: /buildMuniRoute/(.*)
+  script: main.app
+  login: admin
+        
+libraries:
+- name: numpy
+  version: "1.6.1"
+  
+builtins:
+- deferred: on
