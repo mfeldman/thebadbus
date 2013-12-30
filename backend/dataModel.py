@@ -8,7 +8,7 @@ class MuniRoute(db.Model):
     latMax =db.FloatProperty()  
     lonMin = db.FloatProperty()
     lonMax = db.FloatProperty()
-    totalDist = db.FloatPropert()# TODO Fill this in
+    totalDist = db.FloatProperty()# TODO Fill this in
     created = db.DateTimeProperty(auto_now_add=True)
     
 class MuniStop(db.Model):
