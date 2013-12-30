@@ -16,6 +16,9 @@ handlers:
  
 - url: /vehicleId/(.*)
   script: main.app
+
+- url: /about
+  script: main.app
   
 - url: /saveCurrentMuniLocations
   script: main.app

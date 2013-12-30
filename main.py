@@ -177,6 +177,13 @@ class displayVehicleId(webapp2.RequestHandler):
         speed_array.reverse()
         return speed_array
 
+class about(webapp2.RequestHandler):
+    def get(self):
+        path = os.path.join(os.path.dirname(__file__), 'templates/bootstrap_template_index.html')
+        self.response.out.write(template.render(path, {"title": "About",
+                                                       "text" : """ Dont you wish you live in a world were busses were run like Swiss trains!"""
+                                                       }))
+        
     
 class BusDataAccess():
     def recentBusData(self, count = 1000, filter = 'All', ancestor_key = False, output = 'Array'):
@@ -306,5 +313,6 @@ app = webapp2.WSGIApplication([
                                (r'/route/(.*)',displayRoute),
                                (r'/vehicleId/(.*)',displayVehicleId),
                                ('/',index),
+                               ('/about',about),
                                ],
                               debug=False)
