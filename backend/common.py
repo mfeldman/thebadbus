@@ -52,3 +52,20 @@ def distance(lat1, long1, lat2, long2, earth_radius = 6371):
     # Remember to multiply arc by the radius of the earth 
     # in your favorite set of units to get length.
     return arc * earth_radius
+
+def heading_angle(lat1, long1, lat2, long2):
+    #http://software.intel.com/en-us/blogs/2012/11/30/calculating-a-bearing-between-points-in-location-aware-apps
+    degToRad = np.pi / 180.0
+    
+    def initial(lat1, long1, lat2, long2):
+        return (bearing(lat1, long1, lat2, long2) + 360) % 360
+    def final(lat1, long1, lat2, long2):
+        return (bearing(lat2, long2, lat1, long1) + 180.0) % 360
+    def bearing(lat1, long1, lat2, long2):
+        phi1 = lat1 * degToRad;
+        phi2 = lat2 * degToRad;
+        lam1 = long1 * degToRad;
+        lam2 = long2 * degToRad;
+        return np.arctan2(np.sin(lam2-lam1)*np.cos(phi2),
+                np.cos(phi1)*np.sin(phi2) - np.sin(phi1) * np.cos(phi2)*np.cos(lam2-lam1)) * 180 / np.pi
+    return initial(lat1, long1, lat2, long2)

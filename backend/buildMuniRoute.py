@@ -27,7 +27,7 @@ class buildMuniRoute(webapp2.RequestHandler):
             else:
                 text += self.buildAndSaveRoute(route)
 
-        path = os.path.join(os.path.dirname(__file__), '/template/bootstrap_template.html')
+        path = os.path.join(os.path.dirname(__file__), '/templates/bootstrap_template2.html')
         self.response.out.write(template.render(path, {"title": "Building Route",
                                                "text":text,
                                                "more_text":''}))

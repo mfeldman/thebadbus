@@ -57,7 +57,6 @@ class routeInfo():
             
     def calculateRouteMetrics(self):
         logging.info("STARTING CALCUALTE ROUTE METRICS")
-        #logging.info(self)
         for r in self.routeInfoDict: # This only occurs for routes Not for ALL Routes
             logging.info('Route %s ' % (r))
             self.routeInfoDict[r].calculateRouteMetrics()
@@ -65,6 +64,7 @@ class routeInfo():
             # Find bunchers
         if self.routeTag != 'All':
             self.bus_distance_dict = self.findBunchingInRoute()
+            self.bus_distance_stop_dict = self.findClosestStop()
         self.avg_speed_kmhr     = sum(self.speed_array) / float(self.count)
         self.avg_seconds_stale  = sum(self.stale_array) / float(self.count)
         self.slow_bus_ratio     = self.slow_bus_count / (.01 + self.count)
@@ -113,17 +113,22 @@ class routeInfo():
             for bus in self.bus_dir_tag_dict[dir_tag]:
                 if len(bus_id_array) > 1: #True:#try:
                     # TODO make this use bus heading to find the next stop, not the closest stop
+                    logging.info("CLOSEST STOP TO BUS %s")
                     closest_bus_distance, index = tree.query(np.array([float(bus.lon), float(bus.lat)]),2)
-                    closest_bus = bus_id_array[index[1]]
-                    dist = common.distance(bus.lon, bus.lat, 
-                                    bus_loc_array[index[1]][0], bus_loc_array[index[1]][1])
-                    bus.nextBusId = closest_bus
+                    for i in range(3):
+                        closest_stop = stop_id_array[index[i]]
+                        dist = common.distance(bus.lon, bus.lat, 
+                                        stop_loc_array[index[i]][0], stop_loc_array[index[i]][1])
+                        heading = common.heading_angle(bus.lon, bus.lat, stop_loc_array[index[i]][0], stop_loc_array[index[i]][1])
+                        logging.info("STOP %s DIST %s HEADING %s" % (closest_stop, dist, heading))
+
+                    bus.nextStopId = closest_stop
                     bus.distanceNextBus = float(dist)
-                    return_dict[bus.vehicleId] = {'closest_bus' : closest_bus, 
-                                       'closest_bus_distance' : dist}
+                    return_dict[bus.vehicleId] = {'closest_stop' : closest_stop, 
+                                       'closest_stop_distance' : dist}
                 else:#except:
-                    return_dict[bus.vehicleId] = {'closest_bus' : None, 
-                                       'closest_bus_distance' : None}
+                    return_dict[bus.vehicleId] = {'closest_stop' : None, 
+                                       'closest_stop_distance' : None}
         return return_dict
     
     def returnRouteMetrics(self):      
