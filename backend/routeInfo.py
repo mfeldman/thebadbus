@@ -109,6 +109,8 @@ class routeInfo():
                 stop_loc_array.append([float(self.stop_dict[stop]['lat']),
                                        float(self.stop_dict[stop]['lon'])])
                 stop_id_array.append(str(stop)) # TODO what is this really?
+            logging.info(self.stop_dict)
+            logging.info(stop_loc_array)
             tree = KDTree(np.array(stop_loc_array))
             for bus in self.bus_dir_tag_dict[dir_tag]:
                 if len(bus_id_array) > 1: #True:#try:
@@ -172,7 +174,7 @@ class routeInfo():
             if directionTag == None:
                 stop_dict[stop.tag] = {'lat':stop.lat, 'lon':stop.lon, 'next':stop.next,'dist': 0 if stop.dist == None else stop.dist}
             if (common.simple_dir_tag(stop.directionTag) == directionTag):
-                #logging.info("Stop %s lat %s lon %s" % (stop.stopId,stop.lat, stop.lon))
+                logging.info("Stop %s lat %s lon %s" % (stop.stopId,stop.lat, stop.lon))
                 stop_dict[stop.tag] = {'lat':stop.lat, 'lon':stop.lon, 'next':stop.next,'dist':stop.dist}
                 #stop_array.append([stop.lon, stop.lat])
                 #stop_index.append(stop.id)
