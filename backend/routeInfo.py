@@ -56,7 +56,7 @@ class routeInfo():
             self.routeInfoDict[bus.routeTag].addBus(bus)
             
     def calculateRouteMetrics(self):
-        logging.info("STARTING CALCUALTE ROUTE METRICS")
+        logging.info("STARTING CALCULATE ROUTE METRICS")
         for r in self.routeInfoDict: # This only occurs for routes Not for ALL Routes
             logging.info('Route %s ' % (r))
             self.routeInfoDict[r].calculateRouteMetrics()
@@ -178,6 +178,7 @@ class routeInfo():
                 stop_dict[stop.tag] = {'lat':stop.lat, 'lon':stop.lon, 'next':stop.next,'dist':stop.dist}
                 #stop_array.append([stop.lon, stop.lat])
                 #stop_index.append(stop.id)
+        logging.info("ADDED STOP LOCATIONS TO ROUTE %s DIR %s STOP %s ROUTE %s" % (self.routeTag, self.directionTag, self.stop_dict, self.total_distance))
         self.stop_dict = stop_dict
         self.route_distance = total_distance
         #self.stop_array = stop_array
